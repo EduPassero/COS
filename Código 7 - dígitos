@@ -1,0 +1,28 @@
+INICIO
+	;
+	write !,"Digite um número: "
+	read numero
+	set tamanho=$length(numero)
+	
+	for i=1:1:tamanho do
+	. set saida=$extract(numero,i)
+	. if $extract(numero,i)=1 do
+	. . set numeroescrito="UM"
+	. if $extract(numero,i)=2 do
+	. . set numeroescrito="DOIS"
+	. if $extract(numero,i)=3 do
+	. .set numeroescrito="TRES"
+	. if $extract(numero,i)=4 do
+	. .set numeroescrito="QUATRO"
+	. if $extract(numero,i)=5 do
+	. .set numeroescrito="CINCO"
+	. if $extract(numero,i)=6 do
+	. .set numeroescrito="SEIS"
+	. if $extract(numero,i)=7 do
+	. .set numeroescrito="SETE"
+	. if $extract(numero,i)=8 do
+	. .set numeroescrito="OITO"
+	. if $extract(numero,i)=9 do
+	. .set numeroescrito="NOVE"
+	;
+	.write !,saida_" "_numeroescrito
