@@ -1,0 +1,29 @@
+INICIO
+	;
+	write !, "====== CALCULADORA ======"
+	write !, "Digite o primeiro número: "
+	read n1
+	write !, "Selecione: [1]somar, [2]subtrair, [3]multiplicar [4]dividir: "
+	read op
+	write !, "Digite o segundo número: "
+	read n2
+	;
+	if op=1 do
+	. set res=n1+n2
+	. write !,res
+	if op=2 do
+	. set res=n1-n2
+	. write !,res
+	if op=3 do
+	.set res=n1*n2
+	. write !,res
+	if op=4 do
+	. set res=n1/n2
+	. write !,res
+	;
+	if res#2=1 do
+	. write !,"Resultado impar"
+	if res#2=0 do
+	. write !,"Resultado par"
+	;
+	QUIT
