@@ -1,0 +1,53 @@
+INICIO
+	;
+	write !,"============ Agenda Telefonica ============"
+MENU      ;
+	write !,"Selecione sua operacao:"
+	write !,"Cadastrar [1]"
+	write !,"Consultar [2]"
+	write !,"Sair      [3]"
+	read !,opcao
+	;
+	goto:opcao=1 CAD
+	goto:opcao=2 CON
+	goto:opcao=3 SAIR
+	if (opcao'=1)&&(opcao'=2)&&(opcao'=3) do  goto MENU
+	. write !,"Opcao invalida"
+	. write !,"."
+	;
+CAD	write !,"Digite o codigo do contato: "
+	read codigo
+	;
+	if $data(^CONTATO(codigo)) do  goto CAD
+	. write !,"Codigo ja cadastrado! Deseja excluir o antigo? [S] ou [N] "
+	. read confirmacao
+	. if (confirmacao="s")||(confirmacao="S") do
+	. . kill ^CONTATO(codigo)
+	;
+	write !,"Digite o nome do contato: "
+	read nome
+	;
+	write !,"Digite o numero do contato: "
+	read numero
+	;
+	set ^CONTATO(codigo)=nome_"^"_numero
+	;
+	write !,"Contato cadastrado com sucesso!"
+	write !,"."
+	;
+	GOTO MENU
+	;
+CON       ;
+          Write !,"Pesquisando..."
+	if $order(^CONTATO(""))="" do  goto MENU
+	. write !,"Nenhum contato cadastrado!"
+	. write !,"."
+	if $order(^CONTATO(""))'="" do
+	. set contatos=""
+	. set mostrar=""
+	. for  set contatos=$order(^CONTATO(contatos))  quit:contatos=""  do
+	. . set mostrar=$get(^CONTATO(contatos)) 
+	. . write !,mostrar
+	. . write !,"."
+	;
+SAIR	QUIT
