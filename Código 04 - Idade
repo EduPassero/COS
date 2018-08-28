@@ -1,0 +1,10 @@
+INICIO
+	;
+	write !,"Digite a sua data de nascimento: "
+	set hoje=+$horolog
+	read data
+	set data=$zdh(data,4)
+	set res=hoje-data
+	write !,"Você tem "_res_" dias vividos!"
+	;
+	QUIT
