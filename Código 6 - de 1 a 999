@@ -1,0 +1,92 @@
+INICIO
+	;
+	set TAB(0)=""
+	set TAB(1)="UM"
+	set TAB(2)="DOIS "
+	set TAB(3)="TRES "
+	set TAB(4)="QUATRO "
+	set TAB(5)="CINCO "
+	set TAB(6)="SEIS "
+	set TAB(7)="SETE "
+	set TAB(8)="OITO "
+	set TAB(9)="NOVE "
+	set TAB(10)="DEZ "
+	set TAB(11)="ONZE "
+	set TAB(12)="DOZE "
+	set TAB(13)="TREZE "
+	set TAB(14)="QUATORZE "
+	set TAB(15)="QUINZE "
+	set TAB(16)="DESESSEIS "
+	set TAB(17)="DEZESSETE "
+	set TAB(18)="DEZOITO "
+	set TAB(19)="DEZENOVE "
+	set TAB(20)="VINTE "
+	set TAB(21)="VINTE E "
+	set TAB(30)="TRINTA "
+	set TAB(31)="TRINTA E "
+	set TAB(40)="QUARENTA "
+	set TAB(41)="QUARENTA E "
+	set TAB(50)="CINQUENTA "
+	set TAB(51)="CINQUENTA E "
+	set TAB(60)="SESSENTA "
+	set TAB(61)="SESSENTA E "
+	set TAB(70)="SETENTA "
+	set TAB(71)="SETENTA E "
+	set TAB(80)="OITENTA "
+	set TAB(81)="OITENTA E "
+	set TAB(90)="NOVENTA "
+	set TAB(91)="NOVENTA E "
+	set TAB(100)="CEM "
+	set TAB(101)="CENTO E "
+	set TAB(200)="DUZENTOS "
+	set TAB(201)="DUZENTOS E "
+	set TAB(300)="TREZENTOS "
+	set TAB(301)="TREZENTOS E "
+	set TAB(400)="QUATROCENTOS "
+	set TAB(401)="QUATROCENTOS E "
+	set TAB(500)="QUINHENTOS "
+	set TAB(501)="QUINHENTOS E "
+	set TAB(600)="SEISCENTOS "
+	set TAB(601)="SEISCENTOS E "
+	set TAB(700)="SETECENTOS "
+	set TAB(701)="SETECENTOS E "
+	set TAB(800)="OITOCENTOS "
+	set TAB(801)="OITOCENTOS E "
+	set TAB(900)="NOVECENTOS "
+	set TAB(901)="NOVECENTOS E "
+	;
+	set u=0
+	set d=0
+	set c=0
+	;
+	for i=1:1:999 do ;De um a 999 faça...
+	. if i<=10 do
+	. . write !,$justify(i,1)_"-" ;unidades justificadas em uma casa
+	. . set u=$extract(i,1)
+	. . write TAB(i)
+	. ;
+	. if (i>10)&(i<100) do ;pegando todos os números de 2 dígitos
+	. . write !,$justify(i,2)_"-" ;unidades justificadas em duas casas
+	. . set d=$extract(i,1)*10
+	. . set u=$extract(i,2)
+	. . if (d>=10)&(d<20) do ;Como escrever os números entre 10 e 20
+	. . . set d=d+u
+	. . . set u=0
+	. . if (u>0)&(d>0) set d=d+1 ;Caso o número seja "10,20,30,40,50..."
+	. . write TAB(d)_""_TAB(u)
+	. ;
+	. if (i>99) do
+	. . write !,$justify(i,3)_"-" ;unidades justificadas em tres casas
+	. . set u=$extract(i,3)
+	. . ;
+	. . set d=$extract(i,2) ;dezenas na casa 2
+	. . if (u=0)&(d>0) set d=(d*10) ;Tratando os números como 120,130,140
+	. . if (u>0)&(d>1) set d=(d*10)+1 ;Tratando os números como 41,42,67 (quarenta E sete). Adicionando o "e"
+	. . if (d>0)&(d<2) do ; números entre 11 e 20
+	. . . set d=(d*10)+u
+	. . . set u=0
+	. . ;
+	. . set c=($extract(i,1)*100) ;tratando os números como 601,704,923 novecentos E vinte E tres (adicionando o "e")
+	. . if (u>0)||(d>0) set c=c+1
+	. . ;
+	. . write TAB(c)_""_TAB(d)_""_TAB(u) ;escrevendo centena, dezena e unidade
