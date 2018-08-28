@@ -1,0 +1,11 @@
+INICIO
+	;
+	write !,"Digite uma palavra: "
+	read palavra
+	set tamanho=$length(palavra)
+	write !,"A plavra "_ palavra_ " possui "_tamanho_" letras."
+	;
+	for i=1:1:tamanho do
+	.write !,$extract(palavra,i)
+	;
+	QUIT
