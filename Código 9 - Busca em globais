@@ -1,0 +1,113 @@
+INICIO
+	;
+	;CADASTRO DE CLIENTES
+	set empresacliente="IBM"
+	set cliente="Irineu"
+	set cep="88512300"
+	set estado="Santa Catarina"
+	set ^FTCL(empresacliente,cliente)=cep_"^"_estado
+	;
+	set empresacliente="WEG"
+	set cliente="Antonio"
+	set cep="88512300"
+	set estado="Santa Catarina"
+	set ^FTCL(empresacliente,cliente)=cep_"^"_estado
+	;
+	set empresacliente="WHITE"
+	set cliente="Ronaldo"
+	set cep="01023601"
+	set estado="São Paulo"
+	set ^FTCL(empresacliente,cliente)=cep_"^"_estado
+	;
+	set empresacliente="RE"
+	set cliente="Robson"
+	set cep="59950801"
+	set estado="Paraná"
+	set ^FTCL(empresacliente,cliente)=cep_"^"_estado
+	;
+	;
+	;CADASTRO DE EMPRESAS
+	set empresa="WEG"
+	set data=$ZDATEH("16/12/1998",4)
+	set nota="657432"
+	set estado="Santa Catarina"
+	set cliente="Antonio"
+	set ^FTNF(empresa,data,nota)=estado_"^"_cliente
+	;
+	set empresa="WHITE"
+	set data=$ZDATEH("24/05/2007",4)
+	set nota="456772"
+	set estado="São Paulo"
+	set cliente="Ronaldo"
+	set ^FTNF(empresa,data,nota)=estado_"^"_cliente
+	;
+	set empresa="IBM"
+	set data=$ZDATEH("16/07/2010",4)
+	set nota="982357"
+	set estado="Santa Catarina"
+	set cliente="Irineu"
+	set ^FTNF(empresa,data,nota)=estado_"^"_cliente
+	;
+	set empresa="RE"
+	set data=$ZDATEH("25/10/2012",4)
+	set nota="965006"
+	set estado="Paraná"
+	set cliente="Robson"
+	set ^FTNF(empresa,data,nota)=estado_"^"_cliente
+	;
+	;
+	;CADASTROS DE CEP
+	set cep="88512300"
+	set estado="Santa Catarina"
+	set ^%CSCI(cep)=estado
+	;
+	set cep="96500600"
+	set estado="Rio Grande do Sul"
+	set ^%CSCI(cep)=estado
+	;
+	set cep="01023601"
+	set estado="São Paulo"
+	set ^%CSCI(cep)=estado
+	;
+	set cep="59950801"
+	set estado="Paraná"
+	set ^%CSCI(cep)=estado
+	;
+	set empresa=""
+	for  set empresa=$order(^FTNF(empresa)) quit:empresa=""  do
+	. ;write !,$justify("Empresa:"_empresa, 20)
+	. ;
+	. set data=""
+	. for  set data=$order(^FTNF(empresa,data)) quit:data=""  do
+	. . ;write !,$justify("Data:"_data,20)
+	. . ;
+	. . set nota=""
+	. . for  set nota=$order(^FTNF(empresa,data,nota)) quit:nota=""  do
+	. . . ;write !,$justify("Nota"_nota,20)
+	. . . ;
+	. . . set ftnf=$get(^FTNF(empresa,data,nota))
+	. . . set cliente=$piece(ftnf,"^",2)
+	. . . ;
+	. . . set ftcl=$get(^FTCL(empresa,cliente))
+	. . . set cep=$piece(ftcl,"^",1)
+	. . . ;
+	. . . set cepc=$extract(cep, 1)
+	. . . ;
+	. . . if (cepc="8") do
+	. . . . set estado="Santa Catarina"
+	. . . . set ^EXPT(cliente,data,nota)=estado
+	;
+	set cliente=""
+	for  set cliente=$order(^EXPT(cliente)) quit:cliente=""  do
+	. write !,$justify("Cliente:"_cliente,20)
+	. ;
+	. set data=""
+	. for  set data=$order(^EXPT(cliente,data)) quit:data=""  do
+	. . write !,$justify("Data:"_data,20)
+	. . ;
+	. . set nota=""
+	. . for  set nota=$order(^EXPT(cliente,data,nota)) quit:nota=""  do
+	. . . write !,$justify("Nota:"_nota,20)
+	. . . write !,"."
+	;
+	QUIT
