@@ -1,0 +1,40 @@
+INICIO
+	;
+	write !,"Digite o número da placa de seu carro: "
+CAMPOPLACA	read nplaca
+	;
+	if $data(^CARRO(nplaca)) do
+	. write "deseja excluir a existente? "
+	. read pergunta
+	. if pergunta="s" kill ^CARRO(nplaca)
+	. if pergunta="n" GOTO INICIO
+	;
+	write !,"Digite a marca do seu carro: "
+	read marca
+	write !,"Digite o modelo do seu carro: "
+	read modelo
+	write !,"Digite o ano do seu carro: "
+	read ano
+	set ^CARRO(nplaca)=marca_"^"_modelo_"^"_ano
+	write !,"Deseja cadastrar outros veículos?"
+	read sn
+	if (sn="s")||(sn="S") GOTO INICIO
+	;
+	set ^CARRO("LKU7676")="Chevrolet^Monza^1989"
+	set ^CARRO("LZF4567")="Fiat^Uno^2007"
+	set ^CARRO("LZD4447")="Renault^Logan^2015"
+	;
+	set achou=0
+	set placas=""
+	;
+	for  set placas=$order(^CARRO(placas)) quit:placas=""  do
+	. ;
+	. write !,placas
+	. ;
+	. if placas=nplaca set achou=achou+1
+	. ;
+	;
+	if achou>0 write !,"Achou"
+	if achou=0 write !,"Não Achou"
+	;
+	QUIT    
