@@ -1,0 +1,8 @@
+INICIO
+	;
+	set TABUNI(0)="zero"
+	set TABUNI(1)="um"
+	write !,TABUNI(0)
+	write !,TABUNI(1)
+	;
+	QUIT
